@@ -74,4 +74,21 @@ class Maze:
         self.grid[self.exit[0]][self.exit[1]] = self.PASSAGE
         
         return self.grid
+    
+    def to_graph(self):
+        """Converts the maze into an adjacency list graph."""
+        graph = {}
+        rows, cols = len(self.grid), len(self.grid[0])
+
+        for r in range(rows):
+            for c in range(cols):
+                if self.grid[r][c] == self.PASSAGE:
+                    neighbors = []
+                    for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                        nr, nc = r + dr, c + dc
+                        if 0 <= nr < rows and 0 <= nc < cols and self.grid[nr][nc] == self.PASSAGE:
+                            neighbors.append((nr, nc))
+                    graph[(r, c)] = neighbors
+
+        return graph
 
