@@ -1,39 +1,10 @@
 import matplotlib.pyplot as plt
 import time
-from heapq import heappush, heappop
-
-def astar(graph, start_node, goal_node):
-    open_set = [(0, start_node)]
-    came_from = {}
-    cost_so_far = {start_node: 0}
-
-    def heuristic(node, goal):
-        return abs(node[0] - goal[0]) + abs(node[1] - goal[1])
-
-    def rebuild_path(n):
-        path = [n]
-        while n in came_from:
-            n = came_from[n]
-            path.append(n)
-        return path[::-1]
-
-    while open_set:
-        curr_cost, curr_node = heappop(open_set)
-
-        if curr_node == goal_node:
-            return rebuild_path(goal_node)
-
-        for neighbor in graph[curr_node]:
-            new_cost = cost_so_far[curr_node] + 1
-            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
-                cost_so_far[neighbor] = new_cost
-                priority = new_cost + heuristic(neighbor, goal_node)
-                heappush(open_set, (priority, neighbor))
-                came_from[neighbor] = curr_node
-
-    return None
 
 def astar_visualized(graph, start_node, goal_node, maze_grid):
+    """Runs A* algorithm and visualizes the process."""
+    from heapq import heappush, heappop
+
     open_set = [(0, start_node)]
     came_from = {}
     cost_so_far = {start_node: 0}
@@ -54,7 +25,7 @@ def astar_visualized(graph, start_node, goal_node, maze_grid):
     explored = set()
 
     while open_set:
-        curr_cost, curr_node = heappop(open_set)
+        _, curr_node = heappop(open_set)
 
         if curr_node == goal_node:
             path = rebuild_path(goal_node)
@@ -74,13 +45,14 @@ def astar_visualized(graph, start_node, goal_node, maze_grid):
                 came_from[neighbor] = curr_node
 
         plot_maze(maze_grid, rebuild_path(curr_node), explored, start_node, goal_node, ax)
-        time.sleep(0.1)
+        time.sleep(0.0001)
 
     plt.ioff()
     plt.show()
     return None
 
 def plot_maze(grid, path, explored, start_node, goal_node, ax):
+    """Draws the maze and overlays the A* search process."""
     ax.clear()
     
     ax.imshow(grid, cmap="gray", interpolation="nearest")
@@ -98,4 +70,4 @@ def plot_maze(grid, path, explored, start_node, goal_node, ax):
 
     ax.legend(loc="upper right")
     plt.draw()
-    plt.pause(0.01)
+    plt.pause(0.0001)

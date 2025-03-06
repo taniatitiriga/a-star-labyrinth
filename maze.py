@@ -1,22 +1,9 @@
 import random
+import matplotlib.pyplot as plt
+
 
 class Maze:
-    """
-    A class to represent a randomly generated maze.
-    Attributes:
-    -----------
-    WALL : int
-    PASSAGE : int
-        Constants representing walls and passages in the maze.
-    size : int
-        The size of the maze (modified to be odd).
-    grid : list[list[int]]
-        A 2D list representing the maze structure (walls and passages). Used for plotting.
-    entrance : tuple[int, int]
-        Coordinates of the entrance of the maze.
-    exit : tuple[int, int]
-        Coordinates of the exit of the maze.
-    """
+    """A class to represent a randomly generated maze. """
     # maze as a matrix of 0 and 1 for plotting
     WALL = 0
     PASSAGE = 1
@@ -76,7 +63,7 @@ class Maze:
         return self.grid
     
     def to_graph(self):
-        """Converts the maze into an adjacency list graph."""
+        """Converts the maze into an adjacency list graph, for A* algorithm."""
         graph = {}
         rows, cols = len(self.grid), len(self.grid[0])
 
@@ -92,3 +79,9 @@ class Maze:
 
         return graph
 
+def draw_maze(grid):
+    """Generate a simple image of the maze."""
+    plt.figure(figsize=(10, 5))
+    plt.imshow(grid, cmap="gray", interpolation="nearest")
+    plt.xticks([]), plt.yticks([])
+    plt.show()
