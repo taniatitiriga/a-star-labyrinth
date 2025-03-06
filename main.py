@@ -6,7 +6,7 @@ def main():
     option = input("Option:\n1. Visualize A*\n2. Test A*\n")
     if option == "1":
         maze_size = int(input("Maze size:"))
-        if maze_size not in range(5, 100):
+        if maze_size not in range(4, 100):
             print("Choose another size.")
         else:
             maze = Maze(maze_size)
