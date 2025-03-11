@@ -78,10 +78,3 @@ class Maze:
                     graph[(r, c)] = neighbors
 
         return graph
-
-# def draw_maze(grid):
-#     """Generates an image of the maze."""
-#     plt.figure(figsize=(10, 5))
-#     plt.imshow(grid, cmap="gray", interpolation="nearest")
-#     plt.xticks([]), plt.yticks([])
-#     plt.show()
